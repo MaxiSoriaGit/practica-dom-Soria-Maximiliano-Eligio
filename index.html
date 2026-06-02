@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galería de Superhéroes</title>
+
+    <!-- Google Fonts: Bangers (títulos) + Rajdhani (cuerpo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bangers&family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap 5 CSS — framework de estilos y componentes -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons — librería de íconos SVG -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Estilos propios del proyecto -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+
+  <body>
+
+    <!--
+        NAVBAR — navegación principal del sitio    
+         -->
+    <nav id="navbar">
+      <!-- Las clases Bootstrap de esta sección se asignan desde app.js -->
+    </nav>
+
+    <!-- 
+        HEADER — título hero con imagen de fondo   
+        -->
+    <header id="heroHeader">
+      <div id="heroOverlay"></div>
+      <div id="heroContent">
+        <!-- Título y subtítulo se insertan desde app.js -->
+      </div>
+    </header>
+
+    <!-- 
+        MAIN — contenido principal de la galería   
+          -->
+    <main id="mainContent">
+
+      <!-- Barra de filtro por nombre -->
+      <div id="filtroWrapper">
+        <!-- Input group de Bootstrap construido desde app.js -->
+      </div>
+
+      <!-- Contador de resultados visibles -->
+      <p id="contadorResultados"></p>
+
+      <!-- Grilla donde app.js inyecta las cards dinamicamente -->
+      <!-- Las cards NO se escriben aquí; se generan 100% desde JavaScript -->
+      <div id="galeriaHeroes"></div>
+
+      <!-- Mensaje cuando no hay coincidencias en el filtro -->
+      <div id="sinResultados"></div>
+
+    </main>
+
+    <!-- 
+        MODAL — ventana para agregar un héroe      
+         
+         El modal en sí (clases .modal, .modal-dialog, etc.)
+         se construye desde app.js.
+         Aquí solo se declara el contenedor raíz que Bootstrap
+         necesita encontrar en el DOM para inicializar. -->
+    <div id="modalAgregarWrapper"></div>
+
+    <!-- 
+        FORMULARIO — alta de nuevo personaje       
+         
+         El <form> vive en el HTML con sus clases básicas
+         de Bootstrap comentadas. app.js lo mueve dentro
+         del modal y le agrega el evento submit. -->
+    <template id="tplFormulario">
+      <form
+        id="formAgregar"
+        class="needs-validation" <!-- Bootstrap: activa validación visual del formulario -->
+        novalidate
+      >
+
+        <!-- Campo nombre -->
+        <div class="mb-3"> <!-- Bootstrap: mb-3 = margin-bottom espaciado -->
+          <label
+            for="inputNombre"
+            class="form-label" <!-- Bootstrap: estilo de etiqueta de formulario -->
+          >
+            <i class="bi bi-person-fill me-1 text-warning"></i>Nombre del héroe
+          </label>
+          <input
+            id="inputNombre"
+            type="text"
+            class="form-control form-control-dark" <!-- Bootstrap: input estilizado + clase propia -->
+            placeholder="Ej: Spider-Man"
+            required
+            minlength="2"
+          />
+          <div class="invalid-feedback"> <!-- Bootstrap: mensaje de error de validación -->
+            Ingresá un nombre de al menos 2 caracteres.
+          </div>
+        </div>
+
+        <!-- Campo URL de imagen -->
+        <div class="mb-3"> <!-- Bootstrap: mb-3 = margin-bottom espaciado -->
+          <label
+            for="inputImagen"
+            class="form-label" <!-- Bootstrap: estilo de etiqueta de formulario -->
+          >
+            <i class="bi bi-image-fill me-1 text-warning"></i>URL de la imagen
+          </label>
+          <input
+            id="inputImagen"
+            type="url"
+            class="form-control form-control-dark" <!-- Bootstrap: input estilizado + clase propia -->
+            placeholder="https://ejemplo.com/imagen.jpg"
+            required
+          />
+          <div class="invalid-feedback"> <!-- Bootstrap: mensaje de error de validación -->
+            Ingresá una URL de imagen válida.
+          </div>
+        </div>
+
+        <!-- Preview de imagen ingresada -->
+        <div id="previewWrapper" class="text-center d-none mb-2"> <!-- Bootstrap: centrado, oculto por defecto -->
+          <img id="imgPreview" src="" alt="Preview" class="img-preview" />
+        </div>
+
+      </form>
+    </template>
+
+    <!-- 
+        TOAST — notificación de feedback           
+        -->
+    <div
+      id="toastWrapper"
+      class="toast-container position-fixed bottom-0 end-0 p-3" <!-- Bootstrap: posición fija abajo a la derecha -->
+    ></div>
+
+    <!-- 
+        FOOTER — pie de página                     
+        -->
+    <footer id="siteFooter">
+      <!-- Contenido insertado desde app.js -->
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle — incluye Popper para modales y toasts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Lógica de la aplicación -->
+    <script src="assets/js/app.js"></script>
+
+  </body>
+</html>
