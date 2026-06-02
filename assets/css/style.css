@@ -1,0 +1,440 @@
+/* ================================================
+   HEROVAULT — style.css
+   Estilos propios que complementan Bootstrap.
+   Las clases de Bootstrap se aplican desde app.js.
+   ================================================ */
+
+/* ── Variables globales ─────────────────────────── */
+:root {
+  --bg: #08080f;
+  --surface: #10101a;
+  --card-bg: #16162a;
+  --border: #252540;
+  --accent: #ffc107;
+  --accent-red: #e63946;
+  --text: #e8e8f0;
+  --muted: #5a5a7a;
+  --font-display: "Bangers", cursive;
+  --font-body: "Rajdhani", sans-serif;
+  --radius: 12px;
+  --transition: 0.3s ease;
+}
+
+/* ── Base ───────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Navbar ─────────────────────────────────────── */
+#navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: rgba(8, 8, 15, 0.92) !important;
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  letter-spacing: 3px;
+  color: var(--accent) !important;
+  text-shadow: 0 0 22px rgba(255, 193, 7, 0.45);
+}
+
+.navbar-nav .nav-link {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.75) !important;
+  transition: color var(--transition);
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--accent) !important;
+}
+
+/* ── Hero Header ────────────────────────────────── */
+#heroHeader {
+  position: relative;
+  /* Imagen de fondo de Marvel/cómics desde Unsplash */
+  background-image: url("https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=1800&q=80");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 5rem 1rem 4rem;
+  overflow: hidden;
+}
+
+/* Overlay oscuro sobre la imagen de fondo */
+#heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 8, 15, 0.72) 0%,
+    rgba(8, 8, 15, 0.5) 50%,
+    rgba(8, 8, 15, 0.93) 100%
+  );
+}
+
+/* Efecto de líneas de cómic sobre el header */
+#heroHeader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 193, 7, 0.03) 2px,
+    rgba(255, 193, 7, 0.03) 4px
+  );
+  pointer-events: none;
+}
+
+#heroContent {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  letter-spacing: 6px;
+  color: #fff;
+  text-shadow: 0 0 40px rgba(255, 193, 7, 0.6), 3px 3px 0 rgba(230, 57, 70, 0.5);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+/* ── Sección filtro ─────────────────────────────── */
+#filtroWrapper {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+/* Override para inputs dentro del filtro */
+#filtroWrapper .form-control {
+  background-color: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+#filtroWrapper .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+#filtroWrapper .form-control:focus {
+  background-color: var(--card-bg) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25) !important;
+  color: #fff !important;
+}
+
+#filtroWrapper .input-group-text {
+  background-color: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--accent) !important;
+}
+
+/* ── Main ───────────────────────────────────────── */
+#mainContent {
+  flex: 1;
+  background: linear-gradient(180deg, var(--bg) 0%, #0b0b16 100%);
+  padding: 2.5rem 1.5rem;
+}
+
+#contadorResultados {
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  min-height: 1.2em;
+  margin-bottom: 1rem;
+}
+
+/* ── Cards de héroes ────────────────────────────── */
+.hero-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+  transition: transform var(--transition), box-shadow var(--transition),
+    border-color var(--transition);
+  /* Animación de aparición */
+  animation: fadeInUp 0.4s ease both;
+}
+
+/* Efecto hover en las cards */
+.hero-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--accent);
+  border-color: var(--accent);
+}
+
+/* Contenedor de imagen */
+.card-img-wrapper {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  background: #06060e;
+}
+
+.card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease, filter 0.5s ease;
+  filter: saturate(0.85);
+}
+
+.hero-card:hover .card-img-wrapper img {
+  transform: scale(1.1);
+  filter: saturate(1.25) brightness(1.08);
+}
+
+/* Gradiente sobre la imagen */
+.card-img-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: linear-gradient(
+    to top,
+    rgba(22, 22, 42, 0.98) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Badge con el ID del personaje */
+.badge-id {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 193, 7, 0.9);
+  color: #000;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+/* Nombre del héroe */
+.hero-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+  color: #fff;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 0 0.5rem;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+  background: transparent;
+  border: 1px solid rgba(230, 57, 70, 0.4);
+  color: var(--accent-red);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 0;
+  border-radius: 4px;
+  width: 100%;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.btn-eliminar:hover {
+  background: var(--accent-red);
+  border-color: var(--accent-red);
+  color: #fff;
+  box-shadow: 0 0 14px rgba(230, 57, 70, 0.45);
+}
+
+/* Animación de entrada de cards */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-card:nth-child(1) {
+  animation-delay: 0.04s;
+}
+.hero-card:nth-child(2) {
+  animation-delay: 0.09s;
+}
+.hero-card:nth-child(3) {
+  animation-delay: 0.13s;
+}
+.hero-card:nth-child(4) {
+  animation-delay: 0.18s;
+}
+.hero-card:nth-child(5) {
+  animation-delay: 0.22s;
+}
+.hero-card:nth-child(n + 6) {
+  animation-delay: 0.26s;
+}
+
+/* ── Sin resultados ─────────────────────────────── */
+#sinResultados {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--muted);
+  display: none;
+}
+
+#sinResultados i {
+  font-size: 4rem;
+  opacity: 0.25;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+#sinResultados p {
+  font-size: 1.1rem;
+}
+
+/* ── Modal dark ─────────────────────────────────── */
+.modal-content {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.modal-header {
+  background: rgba(255, 193, 7, 0.05);
+  border-bottom-color: rgba(255, 193, 7, 0.3) !important;
+}
+
+.modal-footer {
+  border-top-color: rgba(255, 193, 7, 0.3) !important;
+}
+
+/* Inputs dark dentro del modal */
+.form-control-dark {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  border-radius: 6px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.form-control-dark::placeholder {
+  color: rgba(255, 255, 255, 0.28) !important;
+}
+
+.form-control-dark:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.2) !important;
+  background-color: #1c1c30 !important;
+}
+
+/* Preview de imagen en el modal */
+.img-preview {
+  max-height: 130px;
+  max-width: 100%;
+  border-radius: 8px;
+  border: 2px solid var(--accent);
+  object-fit: cover;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Toast ──────────────────────────────────────── */
+.toast {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  min-width: 260px;
+}
+
+.toast-success {
+  background-color: #142a1e !important;
+  border-left: 4px solid #28a745 !important;
+  color: #7dffb3 !important;
+}
+
+.toast-danger {
+  background-color: #2e1010 !important;
+  border-left: 4px solid var(--accent-red) !important;
+  color: #ffaaaa !important;
+}
+
+/* ── Footer ─────────────────────────────────────── */
+#siteFooter {
+  background: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 1.2rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ── Scrollbar ──────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ── Responsive ─────────────────────────────────── */
+@media (max-width: 576px) {
+  .hero-title {
+    letter-spacing: 2px;
+  }
+  #heroHeader {
+    background-attachment: scroll;
+    padding: 3rem 1rem;
+  }
+  #mainContent {
+    padding: 2rem 1rem;
+  }
+}
