@@ -80,6 +80,48 @@
       </div>
     `;
   }
+  /* ── 3.3 FILTRO ─────────────────────────────────────────────── */
+  function construirFiltro() {
+    const wrapper = document.getElementById("filtroWrapper");
+  
+    /*
+      Bootstrap components usados:
+      - input-group, input-group-lg   → agrupa input + botones
+      - input-group-text              → ícono a la izquierda
+      - form-control                  → estilo del campo de texto
+      - btn btn-warning               → botón de acción
+      - btn btn-outline-light         → botón limpiar
+    */
+    wrapper.innerHTML = `
+      <div class="input-group input-group-lg shadow-lg">
+  
+        <!-- Ícono izquierdo (Bootstrap: input-group-text) -->
+        <span class="input-group-text bg-dark border-warning text-warning">
+          <i class="bi bi-search"></i>
+        </span>
+  
+        <!-- Campo de texto del filtro (Bootstrap: form-control) -->
+        <input
+          id="inputFiltro"
+          type="text"
+          class="form-control bg-dark text-white border-warning border-start-0"
+          placeholder="Buscar héroe por nombre..."
+          aria-label="Filtrar héroes"
+        />
+  
+        <!-- Botón filtrar (Bootstrap: btn btn-warning) -->
+        <button id="btnFiltrar" class="btn btn-warning fw-bold" type="button">
+          FILTRAR
+        </button>
+  
+        <!-- Botón limpiar (Bootstrap: btn btn-outline-light) -->
+        <button id="btnLimpiarFiltro" class="btn btn-outline-light" type="button" title="Limpiar filtro">
+          <i class="bi bi-x-lg"></i>
+        </button>
+  
+      </div>
+    `;
+  }
 
   /* ── 3.7 GALERÍA (grilla) ───────────────────────────────────── */
   function aplicarClasesGaleria() {
@@ -165,7 +207,46 @@
           galeria.appendChild(col);
         });
       }
-
+/* ================================================================
+      6. FILTRO POR NOMBRE
+         Filtra sin recargar la página, actualiza el DOM.
+      ================================================================ */
+      function filtrarPersonajes() {
+        /* Acceso directo al valor del input sin variable intermedia */
+        const texto = document.getElementById("inputFiltro").value.trim().toLowerCase();
+      
+        if (!texto) {
+          renderizarPersonajes(personajes);
+          return;
+        }
+      
+        const filtrados = personajes.filter(({ nombre }) =>
+          nombre.toLowerCase().includes(texto)
+        );
+      
+        renderizarPersonajes(filtrados);
+      }
+      
+      function limpiarFiltro() {
+        document.getElementById("inputFiltro").value = "";
+        renderizarPersonajes(personajes);
+      }
+      
+      function iniciarEventosFiltro() {
+        /* Filtrar al hacer click en el botón */
+        document.getElementById("btnFiltrar")
+          .addEventListener("click", filtrarPersonajes);
+      
+        /* También filtrar al presionar Enter en el input */
+        document.getElementById("inputFiltro")
+          .addEventListener("keydown", (e) => {
+            if (e.key === "Enter") filtrarPersonajes();
+          });
+      
+        /* Limpiar filtro */
+        document.getElementById("btnLimpiarFiltro")
+          .addEventListener("click", limpiarFiltro);
+      }
      /* ================================================================
       9. INICIALIZACIÓN — punto de entrada de la aplicación
       ================================================================ */
