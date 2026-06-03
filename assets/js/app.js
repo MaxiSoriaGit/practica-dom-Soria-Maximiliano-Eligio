@@ -113,3 +113,121 @@
         const bsToast = bootstrap.Toast.getOrCreateInstance(toastEl, { delay: 2800 });
         bsToast.show();
       }
+
+       /* ================================================================
+      5. ELIMINAR PERSONAJE
+         Delegación de eventos en la galería — un solo listener
+         para todos los botones de eliminar.
+      ================================================================ */
+   function iniciarEventoEliminar() {
+    document.getElementById("galeriaHeroes")
+      .addEventListener("click", (e) => {
+        /* Buscar el botón más cercano con data-id */
+        const btn = e.target.closest(".btn-eliminar");
+        if (!btn) return;
+  
+        const id = Number(btn.dataset.id);
+        /* Encontrar índice y eliminar del arreglo */
+        const idx = personajes.findIndex((p) => p.id === id);
+        if (idx === -1) return;
+  
+        const { nombre } = personajes[idx];   /* desestructuración */
+        personajes.splice(idx, 1);
+  
+        renderizarPersonajes(personajes);
+        mostrarToast(`🗑️ "${nombre}" eliminado`, "danger");
+      });
+  }
+
+   /* ================================================================
+      7. FORMULARIO — AGREGAR PERSONAJE
+         Al enviar el form, crea un nuevo objeto y lo agrega al arreglo.
+      ================================================================ */
+      function iniciarEventoFormulario() {
+        document.getElementById("formAgregar")
+          .addEventListener("submit", (e) => {
+            e.preventDefault();
+      
+            const form = e.target;
+      
+            /* Validación nativa de Bootstrap */
+            if (!form.checkValidity()) {
+              form.classList.add("was-validated"); /* Bootstrap: muestra mensajes de error */
+              return;
+            }
+      
+            /* Leer valores directo de los ids, sin variables extra */
+            const nuevoHéroe = {
+              id:     nextId++,
+              nombre: document.getElementById("inputNombre").value.trim(),
+              imagen: document.getElementById("inputImagen").value.trim(),
+            };
+      
+            personajes.push(nuevoHéroe);
+            renderizarPersonajes(personajes);
+      
+            /* Cerrar modal de Bootstrap */
+            bootstrap.Modal.getInstance(document.getElementById("modalAgregar")).hide();
+      
+            /* Resetear formulario */
+            form.reset();
+            form.classList.remove("was-validated");
+            document.getElementById("previewWrapper").classList.add("d-none");
+      
+            mostrarToast(`✅ "${nuevoHéroe.nombre}" agregado`, "success");
+          });
+      
+        /* Preview de imagen en tiempo real */
+        document.getElementById("inputImagen")
+          .addEventListener("input", () => {
+            const url       = document.getElementById("inputImagen").value.trim();
+            const preview   = document.getElementById("imgPreview");
+            const wrapper   = document.getElementById("previewWrapper");
+      
+            if (url) {
+              preview.src = url;
+              wrapper.classList.remove("d-none"); /* Bootstrap: quita d-none para mostrar */
+            } else {
+              wrapper.classList.add("d-none");    /* Bootstrap: oculta el wrapper */
+            }
+          });
+      }
+
+      /* ================================================================
+      9. INICIALIZACIÓN — punto de entrada de la aplicación
+      ================================================================ */
+   document.addEventListener("DOMContentLoaded", () => {
+    /* Paso 1: Construir estructura con clases Bootstrap desde JS */
+    construirNavbar();
+    construirHeader();
+    construirFiltro();
+    construirModal();
+    construirToast();
+    construirFooter();
+  
+    /* Paso 2: Aplicar clases Bootstrap a la grilla */
+    aplicarClasesGaleria();
+  
+    /* Paso 3: La galería arranca oculta — se muestra al presionar "Ver Personajes" */
+    document.getElementById("galeriaHeroes").style.display = "none";
+    document.getElementById("filtroWrapper").style.display = "none";
+    document.getElementById("contadorResultados").style.display = "none";
+  
+    /* Botón "Ver Personajes": muestra la galería la primera vez.
+       Si ya está visible, no hace nada (evita re-renderizado innecesario). */
+    document.getElementById("btnVerPersonajes")
+      .addEventListener("click", () => {
+        const galeria = document.getElementById("galeriaHeroes");
+        /* Si ya está visible, no hacer nada */
+        if (galeria.style.display !== "none") return;
+        galeria.style.display = "";
+        document.getElementById("filtroWrapper").style.display = "";
+        document.getElementById("contadorResultados").style.display = "";
+        renderizarPersonajes(personajes);
+      });
+  
+    /* Paso 4: Activar eventos */
+    iniciarEventoEliminar();
+    iniciarEventosFiltro();
+    iniciarEventoFormulario();
+  });
