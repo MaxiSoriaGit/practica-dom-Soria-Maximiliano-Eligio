@@ -21,6 +21,7 @@
       2. CONTADOR DE IDS — para nuevos personajes agregados
       ---------------------------------------------------------------- */
    let nextId = personajes.length + 1;
+   
    /* ================================================================
       3. BOOTSCRIPT — construcción del DOM con clases de Bootstrap
          Todo componente visual recibe sus clases desde acá.
@@ -28,236 +29,472 @@
    
    /* ── 3.1 NAVBAR ─────────────────────────────────────────────── */
    function construirNavbar() {
-    const nav = document.getElementById("navbar");
-  
-    /* Clases Bootstrap: navbar, navbar-expand-lg, navbar-dark */
-    nav.classList.add("navbar", "navbar-expand-lg", "navbar-dark");
-  
-    nav.innerHTML = `
-      <div class="container-fluid px-4">
-  
-        <!-- Marca / logo -->
-        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-          <i class="bi bi-lightning-charge-fill text-warning fs-4"></i>
-          <span class="brand-title">HeroVault</span>
-        </a>
-  
-        <!-- Botón hamburguesa para mobile (Bootstrap: navbar-toggler) -->
-        <button
-          class="navbar-toggler border-0"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navMenu"
-          aria-controls="navMenu"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-  
-        <!-- Links colapsables (Bootstrap: collapse navbar-collapse) -->
-        <div class="collapse navbar-collapse" id="navMenu">
-          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-            <li class="nav-item">
-              <!-- Botón que muestra la galería al hacer click -->
-              <button id="btnVerPersonajes" class="btn btn-outline-light btn-sm fw-bold px-3">
-                <i class="bi bi-grid-fill me-1"></i>Ver Personajes
-              </button>
-            </li>
-            <!-- Botón que abre el modal de agregar héroe -->
-            <li class="nav-item">
-              <button
-                class="btn btn-warning btn-sm fw-bold px-3"
-                data-bs-toggle="modal"
-                data-bs-target="#modalAgregar"
-              >
-                <i class="bi bi-plus-circle-fill me-1"></i>Nuevo Héroe
-              </button>
-            </li>
-          </ul>
-        </div>
-  
-      </div>
-    `;
-  }
-  /* ── 3.3 FILTRO ─────────────────────────────────────────────── */
-  function construirFiltro() {
-    const wrapper = document.getElementById("filtroWrapper");
-  
-    /*
-      Bootstrap components usados:
-      - input-group, input-group-lg   → agrupa input + botones
-      - input-group-text              → ícono a la izquierda
-      - form-control                  → estilo del campo de texto
-      - btn btn-warning               → botón de acción
-      - btn btn-outline-light         → botón limpiar
-    */
-    wrapper.innerHTML = `
-      <div class="input-group input-group-lg shadow-lg">
-  
-        <!-- Ícono izquierdo (Bootstrap: input-group-text) -->
-        <span class="input-group-text bg-dark border-warning text-warning">
-          <i class="bi bi-search"></i>
-        </span>
-  
-        <!-- Campo de texto del filtro (Bootstrap: form-control) -->
-        <input
-          id="inputFiltro"
-          type="text"
-          class="form-control bg-dark text-white border-warning border-start-0"
-          placeholder="Buscar héroe por nombre..."
-          aria-label="Filtrar héroes"
-        />
-  
-        <!-- Botón filtrar (Bootstrap: btn btn-warning) -->
-        <button id="btnFiltrar" class="btn btn-warning fw-bold" type="button">
-          FILTRAR
-        </button>
-  
-        <!-- Botón limpiar (Bootstrap: btn btn-outline-light) -->
-        <button id="btnLimpiarFiltro" class="btn btn-outline-light" type="button" title="Limpiar filtro">
-          <i class="bi bi-x-lg"></i>
-        </button>
-  
-      </div>
-    `;
-  }
-
-  /* ── 3.7 GALERÍA (grilla) ───────────────────────────────────── */
-  function aplicarClasesGaleria() {
-    const galeria = document.getElementById("galeriaHeroes");
-  
-    /*
-      Bootstrap: row + row-cols-* crean la grilla responsiva.
-      g-4 = gap entre columnas/filas.
-    */
-    galeria.classList.add(
-      "row",
-      "row-cols-1",
-      "row-cols-sm-2",
-      "row-cols-md-3",
-      "row-cols-xl-4",
-      "g-4"
-    );
-  }
-  /* ================================================================
+     const nav = document.getElementById("navbar");
+   
+     /* Clases Bootstrap: navbar, navbar-expand-lg, navbar-dark */
+     nav.classList.add("navbar", "navbar-expand-lg", "navbar-dark");
+   
+     nav.innerHTML = `
+       <div class="container-fluid px-4">
+   
+         <!-- Marca / logo -->
+         <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+           <i class="bi bi-lightning-charge-fill text-warning fs-4"></i>
+           <span class="brand-title">HeroVault</span>
+         </a>
+   
+         <!-- Botón hamburguesa para mobile (Bootstrap: navbar-toggler) -->
+         <button
+           class="navbar-toggler border-0"
+           type="button"
+           data-bs-toggle="collapse"
+           data-bs-target="#navMenu"
+           aria-controls="navMenu"
+           aria-expanded="false"
+           aria-label="Toggle navigation"
+         >
+           <span class="navbar-toggler-icon"></span>
+         </button>
+   
+         <!-- Links colapsables (Bootstrap: collapse navbar-collapse) -->
+         <div class="collapse navbar-collapse" id="navMenu">
+           <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+             <li class="nav-item">
+               <!-- Botón que muestra la galería al hacer click -->
+               <button id="btnVerPersonajes" class="btn btn-outline-light btn-sm fw-bold px-3">
+                 <i class="bi bi-grid-fill me-1"></i>Ver Personajes
+               </button>
+             </li>
+             <!-- Botón que abre el modal de agregar héroe -->
+             <li class="nav-item">
+               <button
+                 class="btn btn-warning btn-sm fw-bold px-3"
+                 data-bs-toggle="modal"
+                 data-bs-target="#modalAgregar"
+               >
+                 <i class="bi bi-plus-circle-fill me-1"></i>Nuevo Héroe
+               </button>
+             </li>
+           </ul>
+         </div>
+   
+       </div>
+     `;
+   }
+   
+   /* ── 3.2 HEADER ─────────────────────────────────────────────── */
+   function construirHeader() {
+     const content = document.getElementById("heroContent");
+   
+     /* Bootstrap: container, py-5 */
+     content.innerHTML = `
+       <div class="container py-5">
+         <h1 class="hero-title">GALERÍA DE SUPERHÉROES</h1>
+         <p class="hero-subtitle">Explorá, filtrá y gestioná tu universo de héroes</p>
+       </div>
+     `;
+   }
+   
+   /* ── 3.3 FILTRO ─────────────────────────────────────────────── */
+   function construirFiltro() {
+     const wrapper = document.getElementById("filtroWrapper");
+   
+     /*
+       Bootstrap components usados:
+       - input-group, input-group-lg   → agrupa input + botones
+       - input-group-text              → ícono a la izquierda
+       - form-control                  → estilo del campo de texto
+       - btn btn-warning               → botón de acción
+       - btn btn-outline-light         → botón limpiar
+     */
+     wrapper.innerHTML = `
+       <div class="input-group input-group-lg shadow-lg">
+   
+         <!-- Ícono izquierdo (Bootstrap: input-group-text) -->
+         <span class="input-group-text bg-dark border-warning text-warning">
+           <i class="bi bi-search"></i>
+         </span>
+   
+         <!-- Campo de texto del filtro (Bootstrap: form-control) -->
+         <input
+           id="inputFiltro"
+           type="text"
+           class="form-control bg-dark text-white border-warning border-start-0"
+           placeholder="Buscar héroe por nombre..."
+           aria-label="Filtrar héroes"
+         />
+   
+         <!-- Botón filtrar (Bootstrap: btn btn-warning) -->
+         <button id="btnFiltrar" class="btn btn-warning fw-bold" type="button">
+           FILTRAR
+         </button>
+   
+         <!-- Botón limpiar (Bootstrap: btn btn-outline-light) -->
+         <button id="btnLimpiarFiltro" class="btn btn-outline-light" type="button" title="Limpiar filtro">
+           <i class="bi bi-x-lg"></i>
+         </button>
+   
+       </div>
+     `;
+   }
+   
+   /* ── 3.4 MODAL ──────────────────────────────────────────────── */
+   function construirModal() {
+     const wrapper = document.getElementById("modalAgregarWrapper");
+   
+     /*
+       Bootstrap components usados:
+       - modal fade                         → overlay animado
+       - modal-dialog modal-dialog-centered → centrado vertical
+       - modal-content                      → caja blanca del modal
+       - modal-header / body / footer       → secciones del modal
+       - btn-close btn-close-white          → botón X de cierre
+     */
+     wrapper.innerHTML = `
+       <div
+         class="modal fade"
+         id="modalAgregar"
+         tabindex="-1"
+         aria-labelledby="modalLabel"
+         aria-hidden="true"
+       >
+         <div class="modal-dialog modal-dialog-centered">
+           <div class="modal-content">
+   
+             <!-- Cabecera del modal -->
+             <div class="modal-header">
+               <h5 class="modal-title text-warning" id="modalLabel">
+                 <i class="bi bi-person-plus-fill me-2"></i>Agregar nuevo héroe
+               </h5>
+               <button
+                 type="button"
+                 class="btn-close btn-close-white"
+                 data-bs-dismiss="modal"
+                 aria-label="Cerrar"
+               ></button>
+             </div>
+   
+             <!-- Cuerpo: aquí se monta el formulario desde el <template> -->
+             <div class="modal-body" id="modalBody"></div>
+   
+             <!-- Pie del modal -->
+             <div class="modal-footer">
+               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                 Cancelar
+               </button>
+               <!-- Submit enlazado al form por atributo form="formAgregar" -->
+               <button type="submit" form="formAgregar" class="btn btn-warning fw-bold">
+                 <i class="bi bi-plus-circle me-1"></i>Agregar héroe
+               </button>
+             </div>
+   
+           </div>
+         </div>
+       </div>
+     `;
+   
+     /* Montar el formulario (desde <template> en el HTML) dentro del modal */
+     const tpl  = document.getElementById("tplFormulario");
+     const clon = tpl.content.cloneNode(true);
+     document.getElementById("modalBody").appendChild(clon);
+   }
+   
+   /* ── 3.5 TOAST ──────────────────────────────────────────────── */
+   function construirToast() {
+     const wrapper = document.getElementById("toastWrapper");
+   
+     /*
+       Bootstrap components usados:
+       - toast                        → componente de notificación
+       - align-items-center, border-0 → utilidades de layout
+     */
+     wrapper.innerHTML = `
+       <div
+         id="toastNotif"
+         class="toast align-items-center border-0"
+         role="alert"
+         aria-live="assertive"
+         aria-atomic="true"
+       >
+         <div class="d-flex">
+           <div class="toast-body fw-semibold" id="toastMensaje"></div>
+           <button
+             type="button"
+             class="btn-close btn-close-white me-2 m-auto"
+             data-bs-dismiss="toast"
+             aria-label="Cerrar"
+           ></button>
+         </div>
+       </div>
+     `;
+   }
+   
+   /* ── 3.6 FOOTER ─────────────────────────────────────────────── */
+   function construirFooter() {
+     document.getElementById("siteFooter").innerHTML = `
+       <i class="bi bi-lightning-charge-fill text-warning me-1"></i>
+       HeroVault &copy; ${new Date().getFullYear()} — Práctica DOM con JavaScript
+     `;
+   }
+   
+   /* ── 3.7 GALERÍA (grilla) ───────────────────────────────────── */
+   function aplicarClasesGaleria() {
+     const galeria = document.getElementById("galeriaHeroes");
+   
+     /*
+       Bootstrap: row + row-cols-* crean la grilla responsiva.
+       g-4 = gap entre columnas y filas.
+     */
+     galeria.classList.add(
+       "row",
+       "row-cols-1",
+       "row-cols-sm-2",
+       "row-cols-md-3",
+       "row-cols-xl-4",
+       "g-4"
+     );
+   }
+   
+   /* ================================================================
       4. RENDERIZADO DE CARDS
          Genera las cards de Bootstrap dinámicamente desde el arreglo.
          Usa desestructuración para extraer id, nombre e imagen.
       ================================================================ */
-      function renderizarPersonajes(lista) {
-        const galeria   = document.getElementById("galeriaHeroes");
-        const sinResult = document.getElementById("sinResultados");
-        const contador  = document.getElementById("contadorResultados");
-      
-        galeria.innerHTML = "";
-      
-        if (lista.length === 0) {
-          sinResult.style.display = "block";
-          sinResult.innerHTML = `
-            <i class="bi bi-emoji-frown"></i>
-            <p>No se encontraron héroes con ese nombre.</p>
-            <button id="btnVerTodos" class="btn btn-outline-warning mt-1">Ver todos</button>
-          `;
-          contador.textContent = "";
-          /* Listener del botón "Ver todos" dentro del panel sin resultados */
-          document.getElementById("btnVerTodos")
-            .addEventListener("click", limpiarFiltro);
-          return;
-        }
-      
-        sinResult.style.display = "none";
-        contador.textContent = `${lista.length} héroe${lista.length !== 1 ? "s" : ""} encontrado${lista.length !== 1 ? "s" : ""}`;
-      
-        lista.forEach((personaje) => {
-          /* ── Desestructuración del objeto personaje ── */
-          const { id, nombre, imagen } = personaje;
-      
-          /*
-            Bootstrap en la card:
-            - col                  → columna del grid (hereda row-cols-*)
-            - card h-100           → tarjeta de altura completa
-            - card-body            → cuerpo interno de la card
-          */
-          const col = document.createElement("div");
-          col.classList.add("col");
-      
-          col.innerHTML = `
-            <div class="card h-100 hero-card">
-      
-              <!-- Wrapper de imagen con overlay y badge -->
-              <div class="card-img-wrapper">
-                <img src="${imagen}" alt="${nombre}" loading="lazy" />
-                <div class="card-img-gradient"></div>
-                <span class="badge-id">#${id}</span>
-              </div>
-      
-              <!-- Cuerpo de la card (Bootstrap: card-body) -->
-              <div class="card-body p-3">
-                <p class="hero-name">${nombre}</p>
-                <!-- Botón eliminar: clase propia + data-id para identificar el personaje -->
-                <button class="btn-eliminar" data-id="${id}">
-                  <i class="bi bi-trash3-fill me-1"></i>Eliminar
-                </button>
-              </div>
-      
-            </div>
-          `;
-      
-          galeria.appendChild(col);
-        });
-      }
-/* ================================================================
+   function renderizarPersonajes(lista) {
+     const galeria   = document.getElementById("galeriaHeroes");
+     const sinResult = document.getElementById("sinResultados");
+     const contador  = document.getElementById("contadorResultados");
+   
+     galeria.innerHTML = "";
+   
+     if (lista.length === 0) {
+       sinResult.style.display = "block";
+       sinResult.innerHTML = `
+         <i class="bi bi-emoji-frown"></i>
+         <p>No se encontraron héroes con ese nombre.</p>
+         <button id="btnVerTodos" class="btn btn-outline-warning mt-1">Ver todos</button>
+       `;
+       contador.textContent = "";
+       /* Listener del botón "Ver todos" dentro del panel sin resultados */
+       document.getElementById("btnVerTodos")
+         .addEventListener("click", limpiarFiltro);
+       return;
+     }
+   
+     sinResult.style.display = "none";
+     contador.textContent = `${lista.length} héroe${lista.length !== 1 ? "s" : ""} encontrado${lista.length !== 1 ? "s" : ""}`;
+   
+     lista.forEach((personaje) => {
+       /* ── Desestructuración del objeto personaje ── */
+       const { id, nombre, imagen } = personaje;
+   
+       /*
+         Bootstrap en la card:
+         - col       → columna del grid (hereda row-cols-*)
+         - card h-100 → tarjeta de altura completa
+         - card-body  → cuerpo interno de la card
+       */
+       const col = document.createElement("div");
+       col.classList.add("col");
+   
+       col.innerHTML = `
+         <div class="card h-100 hero-card">
+   
+           <!-- Wrapper de imagen con overlay y badge -->
+           <div class="card-img-wrapper">
+             <img src="${imagen}" alt="${nombre}" loading="lazy" />
+             <div class="card-img-gradient"></div>
+             <span class="badge-id">#${id}</span>
+           </div>
+   
+           <!-- Cuerpo de la card (Bootstrap: card-body) -->
+           <div class="card-body p-3">
+             <p class="hero-name">${nombre}</p>
+             <!-- Botón eliminar: clase propia + data-id para identificar el personaje -->
+             <button class="btn-eliminar" data-id="${id}">
+               <i class="bi bi-trash3-fill me-1"></i>Eliminar
+             </button>
+           </div>
+   
+         </div>
+       `;
+   
+       galeria.appendChild(col);
+     });
+   }
+   
+   /* ================================================================
+      5. ELIMINAR PERSONAJE
+         Delegación de eventos en la galería — un solo listener
+         para todos los botones de eliminar.
+      ================================================================ */
+   function iniciarEventoEliminar() {
+     document.getElementById("galeriaHeroes")
+       .addEventListener("click", (e) => {
+         /* Buscar el botón más cercano con data-id */
+         const btn = e.target.closest(".btn-eliminar");
+         if (!btn) return;
+   
+         const id  = Number(btn.dataset.id);
+         /* Encontrar índice y eliminar del arreglo */
+         const idx = personajes.findIndex((p) => p.id === id);
+         if (idx === -1) return;
+   
+         const { nombre } = personajes[idx];   /* desestructuración */
+         personajes.splice(idx, 1);
+   
+         renderizarPersonajes(personajes);
+         mostrarToast(`🗑️ "${nombre}" eliminado`, "danger");
+       });
+   }
+   
+   /* ================================================================
       6. FILTRO POR NOMBRE
          Filtra sin recargar la página, actualiza el DOM.
       ================================================================ */
-      function filtrarPersonajes() {
-        /* Acceso directo al valor del input sin variable intermedia */
-        const texto = document.getElementById("inputFiltro").value.trim().toLowerCase();
-      
-        if (!texto) {
-          renderizarPersonajes(personajes);
-          return;
-        }
-      
-        const filtrados = personajes.filter(({ nombre }) =>
-          nombre.toLowerCase().includes(texto)
-        );
-      
-        renderizarPersonajes(filtrados);
-      }
-      
-      function limpiarFiltro() {
-        document.getElementById("inputFiltro").value = "";
-        renderizarPersonajes(personajes);
-      }
-      
-      function iniciarEventosFiltro() {
-        /* Filtrar al hacer click en el botón */
-        document.getElementById("btnFiltrar")
-          .addEventListener("click", filtrarPersonajes);
-      
-        /* También filtrar al presionar Enter en el input */
-        document.getElementById("inputFiltro")
-          .addEventListener("keydown", (e) => {
-            if (e.key === "Enter") filtrarPersonajes();
-          });
-      
-        /* Limpiar filtro */
-        document.getElementById("btnLimpiarFiltro")
-          .addEventListener("click", limpiarFiltro);
-      }
-     /* ================================================================
+   function filtrarPersonajes() {
+     /* Acceso directo al valor del input sin variable intermedia */
+     const texto = document.getElementById("inputFiltro").value.trim().toLowerCase();
+   
+     if (!texto) {
+       renderizarPersonajes(personajes);
+       return;
+     }
+   
+     const filtrados = personajes.filter(({ nombre }) =>
+       nombre.toLowerCase().includes(texto)
+     );
+   
+     renderizarPersonajes(filtrados);
+   }
+   
+   function limpiarFiltro() {
+     document.getElementById("inputFiltro").value = "";
+     renderizarPersonajes(personajes);
+   }
+   
+   function iniciarEventosFiltro() {
+     /* Filtrar al hacer click en el botón */
+     document.getElementById("btnFiltrar")
+       .addEventListener("click", filtrarPersonajes);
+   
+     /* También filtrar al presionar Enter en el input */
+     document.getElementById("inputFiltro")
+       .addEventListener("keydown", (e) => {
+         if (e.key === "Enter") filtrarPersonajes();
+       });
+   
+     /* Limpiar filtro */
+     document.getElementById("btnLimpiarFiltro")
+       .addEventListener("click", limpiarFiltro);
+   }
+   
+   /* ================================================================
+      7. FORMULARIO — AGREGAR PERSONAJE
+         Al enviar el form, crea un nuevo objeto y lo agrega al arreglo.
+      ================================================================ */
+   function iniciarEventoFormulario() {
+     document.getElementById("formAgregar")
+       .addEventListener("submit", (e) => {
+         e.preventDefault();
+   
+         const form = e.target;
+   
+         /* Validación nativa de Bootstrap */
+         if (!form.checkValidity()) {
+           form.classList.add("was-validated"); /* Bootstrap: muestra mensajes de error */
+           return;
+         }
+   
+         /* Leer valores directo de los ids, sin variables extra */
+         const nuevoHeroe = {
+           id:     nextId++,
+           nombre: document.getElementById("inputNombre").value.trim(),
+           imagen: document.getElementById("inputImagen").value.trim(),
+         };
+   
+         personajes.push(nuevoHeroe);
+         renderizarPersonajes(personajes);
+   
+         /* Cerrar modal de Bootstrap */
+         bootstrap.Modal.getInstance(document.getElementById("modalAgregar")).hide();
+   
+         /* Resetear formulario */
+         form.reset();
+         form.classList.remove("was-validated");
+         document.getElementById("previewWrapper").classList.add("d-none");
+   
+         mostrarToast(`✅ "${nuevoHeroe.nombre}" agregado`, "success");
+       });
+   
+     /* Preview de imagen en tiempo real */
+     document.getElementById("inputImagen")
+       .addEventListener("input", () => {
+         const url     = document.getElementById("inputImagen").value.trim();
+         const preview = document.getElementById("imgPreview");
+         const wrapper = document.getElementById("previewWrapper");
+   
+         if (url) {
+           preview.src = url;
+           wrapper.classList.remove("d-none"); /* Bootstrap: quita d-none para mostrar */
+         } else {
+           wrapper.classList.add("d-none");    /* Bootstrap: oculta el wrapper */
+         }
+       });
+   }
+   
+   /* ================================================================
+      8. TOAST — notificación de feedback
+      ================================================================ */
+   function mostrarToast(mensaje, tipo = "success") {
+     const toastEl  = document.getElementById("toastNotif");
+     const toastMsg = document.getElementById("toastMensaje");
+   
+     /* Remover clase previa de tipo y aplicar la nueva */
+     toastEl.classList.remove("toast-success", "toast-danger");
+     toastEl.classList.add(`toast-${tipo}`);
+     toastMsg.textContent = mensaje;
+   
+     /* Inicializar y mostrar el Toast de Bootstrap */
+     const bsToast = bootstrap.Toast.getOrCreateInstance(toastEl, { delay: 2800 });
+     bsToast.show();
+   }
+   
+   /* ================================================================
       9. INICIALIZACIÓN — punto de entrada de la aplicación
       ================================================================ */
-      document.addEventListener("DOMContentLoaded", () => {
-        /* Paso 1: Construir estructura con clases Bootstrap desde JS */
-        construirNavbar();
-        construirHeader();
-        construirFiltro();
-        construirModal();
-        construirToast();
-        construirFooter();
-      
-        /* Paso 2: Aplicar clases Bootstrap a la grilla */
-        aplicarClasesGaleria();
+   document.addEventListener("DOMContentLoaded", () => {
+     /* Paso 1: Construir estructura con clases Bootstrap desde JS */
+     construirNavbar();
+     construirHeader();
+     construirFiltro();
+     construirModal();
+     construirToast();
+     construirFooter();
+   
+     /* Paso 2: Aplicar clases Bootstrap a la grilla */
+     aplicarClasesGaleria();
+   
+     /* Paso 3: La galería arranca oculta — se muestra al presionar "Ver Personajes" */
+     document.getElementById("galeriaHeroes").style.display = "none";
+     document.getElementById("filtroWrapper").style.display = "none";
+     document.getElementById("contadorResultados").style.display = "none";
+   
+     /* Botón "Ver Personajes": muestra la galería la primera vez.
+        Si ya está visible, no hace nada (evita re-renderizado innecesario). */
+     document.getElementById("btnVerPersonajes")
+       .addEventListener("click", () => {
+         const galeria = document.getElementById("galeriaHeroes");
+         /* Si ya está visible, no hacer nada */
+         if (galeria.style.display !== "none") return;
+         galeria.style.display = "";
+         document.getElementById("filtroWrapper").style.display = "";
+         document.getElementById("contadorResultados").style.display = "";
+         renderizarPersonajes(personajes);
+       });
+   
+     /* Paso 4: Activar eventos */
+     iniciarEventoEliminar();
+     iniciarEventosFiltro();
+     iniciarEventoFormulario();
+   });
